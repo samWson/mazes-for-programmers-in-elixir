@@ -10,23 +10,24 @@ defmodule Maze do
 
       iex> Maze.grid(2, 3)
       [
-        %{column: 0, links: [], row: 0},
-        %{column: 0, links: [], row: 0},
-        %{column: 0, links: [], row: 0},
-        %{column: 0, links: [], row: 0},
-        %{column: 0, links: [], row: 0},
-        %{column: 0, links: [], row: 0}
+        %{column: 1, links: [], row: 1},
+        %{column: 1, links: [], row: 2},
+        %{column: 1, links: [], row: 3},
+        %{column: 2, links: [], row: 1},
+        %{column: 2, links: [], row: 2},
+        %{column: 2, links: [], row: 3}
       ]
   """
   def grid(columns, rows) do
-    length = columns * rows
-    uninitialized_cell = %{column: 0, row: 0, links: []}
-
-    List.duplicate(uninitialized_cell, length)
-    # TODO: initialize the grid cells with their coordinates
+    Enum.map(
+      1..columns, fn x -> 1..rows
+        |> Enum.map(initialized_cell(x, y)) end
+      )
+      |> List.flatten
+    # Enum.map(1..columns, fn x -> 1..rows |> Enum.map(fn y -> %{column: x, row: y, links: []} end) end) |> List.flatten
   end
 
-  defp initialize_cells(grid) do
-    # #map over grid then do two nested ranges with #each for columns and rows
+  defp initialized_cell(column, row) do
+    %{column: column, row: row, links: []}
   end
 end
