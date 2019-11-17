@@ -19,16 +19,11 @@ defmodule Maze do
       }
   """
   def new(columns: columns, rows: rows) do
-    coordinates = build_coordinates(columns: columns, rows: rows)
-    build_cells(coordinates)
+    build_cells(generate_coordinates(columns: columns, rows: rows))
   end
 
-  defp build_coordinates(columns: columns, rows: rows) do
-    Enum.map(1..columns, fn column -> coordinates_for_column(column, 1..rows) end) |> List.flatten()
-  end
-
-  defp coordinates_for_column(column, range) do
-    Enum.map(range, fn row -> {column, row} end)
+  defp generate_coordinates(columns: columns, rows: rows) do
+    for x <- 1..columns, y <- 1..rows, do: {x, y}
   end
 
   defp build_cells(coordinates) do
