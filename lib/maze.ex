@@ -1,14 +1,16 @@
 defmodule Maze do
   @moduledoc """
-  Documentation for Maze.
+  A maze is an abstraction of a grid of cells linked together to form random
+  paths.
   """
 
   @doc """
-  Maze.
+  new()
 
   ## Examples
 
-      iex> Maze.new(columns: 2, rows: 3)
+      iex> extent = Coordinates.new(column: 2, row: 3)
+      iex> Maze.new(extent)
       %{
         {1, 1} => [],
         {1, 2} => [],
@@ -18,12 +20,13 @@ defmodule Maze do
         {2, 3} => [],
       }
   """
-  def new(columns: columns, rows: rows) do
-    build_cells(generate_coordinates(columns: columns, rows: rows))
+  @spec new(%Coordinates{}) :: map()
+  def new(extent) do
+    build_cells(generate_coordinates(extent))
   end
 
-  defp generate_coordinates(columns: columns, rows: rows) do
-    for x <- 1..columns, y <- 1..rows, do: {x, y}
+  defp generate_coordinates(extent) do
+    for x <- 1..extent.column, y <- 1..extent.row, do: {x, y}
   end
 
   defp build_cells(coordinates) do
